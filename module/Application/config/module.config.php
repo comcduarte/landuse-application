@@ -16,6 +16,11 @@ use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Application\Controller\ApplicationController;
 use Application\Controller\Factory\ApplicationControllerFactory;
+use Application\Controller\Factory\ParcelControllerFactory;
+use Application\Controller\Factory\ZoneDesignationControllerFactory;
+use Application\Form\ZoneDesignationForm;
+use Application\Form\ParcelForm;
+use Application\Form\Factory\ParcelFormFactory;
 
 return [
     'router' => [
@@ -86,12 +91,16 @@ return [
             Controller\IndexController::class => InvokableFactory::class,
             'applicationtype' => ApplicationTypeControllerFactory::class,
             ConfigController::class => ConfigControllerFactory::class,
+            'parcel' => ParcelControllerFactory::class,
+            'zonedesignation' => ZoneDesignationControllerFactory::class,
         ],
     ],
     'form_elements' => [
         'factories' => [
             ApplicationForm::class => ApplicationFormFactory::class,
             ApplicationTypeForm::class => InvokableFactory::class,
+            ParcelForm::class => ParcelFormFactory::class,
+            ZoneDesignationForm::class => InvokableFactory::class,
         ],
     ],
     'log' => [
@@ -161,7 +170,31 @@ return [
                             ],
                         ],
                     ],
-                    
+                    'zone-designation' => [
+                        'label'  => 'Zone Designations',
+                        'route'  => 'lists',
+                        'resource' => 'lists',
+                        'privilege' => 'index',
+                        'class' => 'dropdown-submenu',
+                        'pages' => [
+                            'zone-designation-create' => [
+                                'label'  => 'Add Zone Designation',
+                                'route'  => 'lists',
+                                'controller' => 'zonedesignation',
+                                'action' => 'create',
+                                'resource' => 'lists',
+                                'privilege' => 'create',
+                            ],
+                            'zone-designation-list' => [
+                                'label'  => 'List Zone Designations',
+                                'route'  => 'lists',
+                                'controller' => 'zonedesignation',
+                                'action' => 'index',
+                                'resource' => 'lists',
+                                'privilege' => 'index',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             'settings' => [
